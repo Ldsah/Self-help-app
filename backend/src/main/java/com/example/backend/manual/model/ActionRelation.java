@@ -1,23 +1,27 @@
 package com.example.backend.manual.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Table(name = "action_relation")
+@Entity
 public class ActionRelation {
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long parentActionId;
-    private Long childActionId;
+    private Long parentId;
+    private Long childId;
 
     public ActionRelation(){
 
     }
-    public ActionRelation(Long parentActionId, Long childActionId){
+    public ActionRelation(Long parentId, Long childId){
         super();
-        this.parentActionId = parentActionId;
-        this.childActionId = childActionId;
+        this.parentId = parentId;
+        this.childId = childId;
     }
 
     public Long getId() {
@@ -28,19 +32,19 @@ public class ActionRelation {
         this.id = id;
     }
 
-    public Long getParentActionId() {
-        return parentActionId;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setParentActionId(Long parentActionId) {
-        this.parentActionId = parentActionId;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
-    public Long getChildActionId() {
-        return childActionId;
+    public Long getChildId() {
+        return childId;
     }
 
-    public void setChildActionId(Long childActionId) {
-        this.childActionId = childActionId;
+    public void setChildId(Long childId) {
+        this.childId = childId;
     }
 }

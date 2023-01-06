@@ -1,9 +1,11 @@
 package com.example.backend.manual.service;
 
+import com.example.backend.auth.pojo.MessageResponse;
 import com.example.backend.manual.model.Manual;
 import com.example.backend.manual.repository.ManualRepository;
 import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,5 +23,6 @@ public class ManualServiceImpl implements ManualService {
     public Optional<Manual> save(Manual manual){
         return Optional.of(manualRepository.save(manual));
     }
+
 
 }

@@ -2,35 +2,21 @@ package com.example.backend.manual.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "actionExecutor")
-
+@Table(name = "action_executor")
 public class ActionExecutor {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true, name = "name")
+    private ActionExecutorName name;
+
     private String description;
 
-    public ActionExecutor(){
-
+    public ActionExecutor() {
     }
-
-    public ActionExecutor(String name, String description){
-        super();
-        this.name = name;
-        this.description = description;
-    }
-
-    @OneToMany(mappedBy = "actionExecutor",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true)
-    List<Action> actionsForExecutor = new ArrayList<>();
-
 
 
     public Long getId() {
@@ -41,13 +27,6 @@ public class ActionExecutor {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
@@ -55,5 +34,13 @@ public class ActionExecutor {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ActionExecutorName getName() {
+        return name;
+    }
+
+    public void setName(ActionExecutorName name) {
+        this.name = name;
     }
 }

@@ -5,20 +5,26 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "actions")
 public class Action {
-    @Id
-    private Long id;
+
+
     //дейтсвие или вопрос, на который пациент должен ответить
     private String step;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long stepId;
+
     //предыдущее действие или вопрос, через которое(ый) пациент перешел к текущему
 
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manual_id")
-    private Manual manual;
+    protected Manual manual;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "actionExecutorId")
+    @JoinColumn(name = "action_executor_id")
     private ActionExecutor actionExecutor;
 
 
@@ -26,19 +32,11 @@ public class Action {
 
     }
 
-    public Action(Long id, String step) {
+    public Action(Long stepId, String step, ActionExecutor actionExecutor) {
         super();
-        this.id = id;
+        this.stepId = stepId;
         this.step = step;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.actionExecutor = actionExecutor;
     }
 
 
@@ -51,5 +49,29 @@ public class Action {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public Manual getManual() {
+        return manual;
+    }
+
+    public void setManual(Manual manual) {
+        this.manual = manual;
+    }
+
+    public Long getStepId() {
+        return stepId;
+    }
+
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
+    }
 
 }
