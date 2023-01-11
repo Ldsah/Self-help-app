@@ -19,10 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/createManual")
 public class SaveManualController {
     @Autowired
@@ -44,7 +45,7 @@ public class SaveManualController {
         this.service = service;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/saveManual")
     @Transactional
     public ResponseEntity<?> save(@RequestBody ManualSaveForm manualSaveForm) {
         Manual manual = new Manual(manualSaveForm.getManual(), manualSaveForm.getDescription());

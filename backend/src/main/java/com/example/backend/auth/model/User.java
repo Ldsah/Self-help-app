@@ -4,8 +4,10 @@ package com.example.backend.auth.model;
 import jakarta.persistence.*;
 
 //import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users",
@@ -20,12 +22,27 @@ public class User  {
     private String username;
     private String email;
     private String password;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                ", roles=" + Arrays.toString(roles.toArray()) +
+                '}';
+    }
+
     private String name;
     private String phone;
     private String gender;
     private Integer age;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
