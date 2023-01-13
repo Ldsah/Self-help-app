@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 public class Action {
 
 
-    //дейтсвие или вопрос, на который пациент должен ответить
     private String step;
     @Id
     @GeneratedValue
@@ -15,7 +14,6 @@ public class Action {
 
     private Long stepId;
 
-    //предыдущее действие или вопрос, через которое(ый) пациент перешел к текущему
 
 
 

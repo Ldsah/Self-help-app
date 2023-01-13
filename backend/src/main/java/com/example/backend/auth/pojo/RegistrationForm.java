@@ -10,6 +10,7 @@ public class RegistrationForm {
     private String phone;
     private String gender;
     private Integer age;
+    private String role;
 
     public String getUsername() {
         return username;
@@ -65,5 +66,13 @@ public class RegistrationForm {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
