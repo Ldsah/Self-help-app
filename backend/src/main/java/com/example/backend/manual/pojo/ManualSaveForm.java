@@ -8,7 +8,6 @@ public class ManualSaveForm {
     private List<ActionJson> actions;
     private List<ActionRelationJson> relation;
 
-
     public String getManual() {
         return manual;
     }

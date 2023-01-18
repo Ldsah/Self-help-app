@@ -4,8 +4,6 @@ public class ActionRelationJson {
 
     private Long parentId;
     private Long childId;
-
-
     public Long getParentId() {
         return parentId;
     }

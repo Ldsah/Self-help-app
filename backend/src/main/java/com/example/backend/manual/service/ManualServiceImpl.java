@@ -1,13 +1,9 @@
 package com.example.backend.manual.service;
 
-import com.example.backend.auth.pojo.MessageResponse;
 import com.example.backend.manual.model.Manual;
 import com.example.backend.manual.repository.ManualRepository;
-import org.hibernate.engine.spi.ManagedEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

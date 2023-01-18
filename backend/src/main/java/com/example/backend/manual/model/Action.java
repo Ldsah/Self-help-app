@@ -5,17 +5,12 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "actions")
 public class Action {
-
-
     private String step;
     @Id
     @GeneratedValue
     private Long id;
 
     private Long stepId;
-
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manual_id")
@@ -24,7 +19,6 @@ public class Action {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "action_executor_id")
     private ActionExecutor actionExecutor;
-
 
     public Action() {
 
@@ -36,7 +30,6 @@ public class Action {
         this.step = step;
         this.actionExecutor = actionExecutor;
     }
-
 
     public String getStep() {
         return step;
@@ -54,7 +47,6 @@ public class Action {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public Manual getManual() {
         return manual;

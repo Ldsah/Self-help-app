@@ -2,13 +2,9 @@ package com.example.backend.auth.model;
 
 
 import jakarta.persistence.*;
-
-//import javax.persistence.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
@@ -61,8 +57,6 @@ public class User  {
         this.phone = phone;
         this.gender = gender;
         this.age = age;
-
-
     }
 
     public Long getId() {

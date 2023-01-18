@@ -4,14 +4,11 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String ROLE_USER = "USER";
-    public static final String ROLE_ADMIN = "ADMIN";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +18,6 @@ public class Role implements Serializable {
     public Role() {
 
     }
-
     public Role(String name) {
         this.name = name;
     }

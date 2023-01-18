@@ -14,7 +14,6 @@ import com.example.backend.manual.repository.ManualRepository;
 import com.example.backend.manual.service.ManualService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +38,6 @@ public class SaveManualController {
     @Autowired
     private ActionRelationRepository actionRelationRepository;
 
-
     @Autowired
     public SaveManualController(ManualService service) {
         this.service = service;
@@ -63,7 +61,6 @@ public class SaveManualController {
             ActionRelation actionRelation = new ActionRelation(actionRelationJson.getParentId(), actionRelationJson.getChildId());
             actionRelationRepository.save(actionRelation);
         }
-
         return ResponseEntity.ok(new MessageResponse(("Manual saved")));
     }
 

@@ -1,6 +1,5 @@
 package com.example.backend.manual.pojo;
 
-import com.example.backend.manual.model.ActionExecutor;
 import com.example.backend.manual.model.ActionExecutorName;
 
 public class ActionJson {

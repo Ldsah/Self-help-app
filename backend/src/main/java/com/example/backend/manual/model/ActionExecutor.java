@@ -17,8 +17,6 @@ public class ActionExecutor {
 
     public ActionExecutor() {
     }
-
-
     public Long getId() {
         return id;
     }

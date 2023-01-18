@@ -9,7 +9,9 @@ import com.example.backend.auth.repository.RoleRepository;
 import com.example.backend.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -17,19 +19,22 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/signup")
-public class SignUpController {
+@RequestMapping("/auth")
+public class AuthController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     Set<Role> roles = new HashSet<>();
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/signup")
+    @Transactional
     public ResponseEntity<?> signUpUser(@RequestBody RegistrationForm registrationForm){
         if(userRepository.existsByUsername(registrationForm.getUsername())){
             return ResponseEntity
@@ -57,9 +62,4 @@ public class SignUpController {
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User created"));
     }
-
-
-
-
-
 }
