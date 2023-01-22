@@ -1,5 +1,6 @@
 package com.example.backend.manual.model;
 
+import com.example.backend.auth.model.User;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,9 +20,12 @@ public class Manual {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    List<Action> actionsForManual = new ArrayList<>();
+    protected List<Action> actionsForManual = new ArrayList<>();
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    protected User user;
     public Manual(){
 
     }
@@ -56,5 +60,12 @@ public class Manual {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 

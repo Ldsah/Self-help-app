@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .requestMatchers("/manuals/all").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/profile/data").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/createManual/saveManual").hasRole("SPECIALIST")
+                .requestMatchers("/manuals/addedManuals").hasRole("SPECIALIST")
                 .and()
                 .httpBasic();
         return http.build();

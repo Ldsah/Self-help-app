@@ -1,6 +1,7 @@
 package com.example.backend.manual.controllers;
 
 import com.example.backend.auth.pojo.MessageResponse;
+import com.example.backend.auth.repository.UserRepository;
 import com.example.backend.manual.model.Action;
 import com.example.backend.manual.model.ActionRelation;
 import com.example.backend.manual.model.Manual;
@@ -14,6 +15,9 @@ import com.example.backend.manual.repository.ManualRepository;
 import com.example.backend.manual.service.ManualService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,12 +35,12 @@ public class SaveManualController {
     private ManualRepository manualRepository;
     @Autowired
     private ActionRepository actionRepository;
-
     @Autowired
     private ActionExecutorRepository actionExecutorRepository;
-
     @Autowired
     private ActionRelationRepository actionRelationRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public SaveManualController(ManualService service) {
@@ -61,6 +65,12 @@ public class SaveManualController {
             ActionRelation actionRelation = new ActionRelation(actionRelationJson.getParentId(), actionRelationJson.getChildId());
             actionRelationRepository.save(actionRelation);
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        var userOptional = userRepository.findByUsername(currentPrincipalName);
+        var user = userOptional.orElseThrow(()->new UsernameNotFoundException(currentPrincipalName));
+        manual.setUser(user);
+
         return ResponseEntity.ok(new MessageResponse(("Manual saved")));
     }
 

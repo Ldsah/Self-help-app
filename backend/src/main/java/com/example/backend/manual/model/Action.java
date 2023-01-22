@@ -18,7 +18,7 @@ public class Action {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "action_executor_id")
-    private ActionExecutor actionExecutor;
+    protected ActionExecutor actionExecutor;
 
     public Action() {
 

@@ -1,6 +1,7 @@
 package com.example.backend.auth.model;
 
 
+import com.example.backend.manual.model.Manual;
 import jakarta.persistence.*;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -44,6 +45,12 @@ public class User  {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_manuals",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "manual_id"))
+    private Set<Manual> manuals = new HashSet<>();
 
     public User(){
 
@@ -134,6 +141,11 @@ public class User  {
         this.email = email;
     }
 
+    public Set<Manual> getManuals() {
+        return manuals;
+    }
 
-
+    public void setManuals(Set<Manual> manuals) {
+        this.manuals = manuals;
+    }
 }
