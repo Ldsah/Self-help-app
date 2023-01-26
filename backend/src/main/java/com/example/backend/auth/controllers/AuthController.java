@@ -3,13 +3,16 @@ package com.example.backend.auth.controllers;
 
 import com.example.backend.auth.model.Role;
 import com.example.backend.auth.model.User;
+import com.example.backend.auth.pojo.LoginForm;
 import com.example.backend.auth.pojo.RegistrationForm;
 import com.example.backend.auth.pojo.MessageResponse;
 import com.example.backend.auth.repository.RoleRepository;
 import com.example.backend.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +64,17 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User created"));
+    }
+    @PostMapping("/signin")
+    @Transactional
+    public HttpStatus signIn(@RequestBody LoginForm loginForm){
+            userRepository.existsByUsername(loginForm.getUsername());
+            var userOpt = userRepository.findByUsername(loginForm.getUsername());
+            var user = userOpt.orElseThrow(()->new UsernameNotFoundException(loginForm.getUsername()));
+            if(!passwordEncoder.matches(loginForm.getPassword(), user.getPassword())){
+                return HttpStatus.OK;
+            }else{
+                return HttpStatus.NOT_FOUND;
+            }
     }
 }

@@ -40,12 +40,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/signup").permitAll()
-                .requestMatchers("/auth/signin").hasAnyRole("SPECIALIST", "USER")
-                .requestMatchers("/manuals/all").hasAnyRole("SPECIALIST", "USER")
+                .requestMatchers("/auth/signup" ).permitAll()
+                .requestMatchers("/manuals/all", "/manuals/addManual").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/profile/data").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/createManual/saveManual").hasRole("SPECIALIST")
                 .requestMatchers("/manuals/addedManuals").hasRole("SPECIALIST")
+                .and()
+                .formLogin().loginPage("/auth/signin").successForwardUrl("/profile").failureForwardUrl("/auth/signin")
                 .and()
                 .httpBasic();
         return http.build();
