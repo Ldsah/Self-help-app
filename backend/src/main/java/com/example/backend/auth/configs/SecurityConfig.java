@@ -40,7 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/signup" ).permitAll()
+                .requestMatchers("/auth/signup", "/auth/signin" ).permitAll()
                 .requestMatchers("/manuals/all", "/manuals/addManual").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/profile/data").hasAnyRole("SPECIALIST", "USER")
                 .requestMatchers("/createManual/saveManual").hasRole("SPECIALIST")
