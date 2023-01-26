@@ -1,12 +1,18 @@
 package com.example.backend.auth.configs;
 
+import com.example.backend.auth.jwt.JwtConfigurer;
+import com.example.backend.auth.jwt.JwtTokenProvider;
 import com.example.backend.auth.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,10 +20,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+    private final JwtTokenProvider jwtTokenProvider;
+
+    private static final String LOGIN_ENDPOINT = "/auth/signin";
+
+
+    @Autowired
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
     }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -25,30 +37,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                                       UserDetailsServiceImpl userDetailsService) throws Exception{
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
 
     }
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/signup", "/auth/signin" ).permitAll()
-                .requestMatchers("/manuals/all", "/manuals/addManual").hasAnyRole("SPECIALIST", "USER")
-                .requestMatchers("/profile/data").hasAnyRole("SPECIALIST", "USER")
-                .requestMatchers("/createManual/saveManual").hasRole("SPECIALIST")
-                .requestMatchers("/manuals/addedManuals").hasRole("SPECIALIST")
+                .requestMatchers("/auth/signup", LOGIN_ENDPOINT).permitAll()
+                .requestMatchers("/createManual/saveManual", "/manuals/addedManuals").hasRole("SPECIALIST")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/auth/signin").successForwardUrl("/profile").failureForwardUrl("/auth/signin")
-                .and()
-                .httpBasic();
+                .apply(new JwtConfigurer(jwtTokenProvider));
         return http.build();
     }
 
