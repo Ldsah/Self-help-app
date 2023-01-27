@@ -1,0 +1,29 @@
+.header {
+    background: #0088ff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    justify-content: space-between;
+}
+
+.header_title {
+    color: white;
+}
+
+.header_title a {
+    color: white;
+    text-decoration: none;
+}
+
+.header_title a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.header_links {
+    margin-left: 10px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}

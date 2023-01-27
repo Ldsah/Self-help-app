@@ -1,0 +1,13 @@
+.manual-element {
+    display: flex;
+}
+
+.question {
+    color: black;
+    border-color: white;
+}
+
+.answer {
+    color: aquamarine;
+}
+
