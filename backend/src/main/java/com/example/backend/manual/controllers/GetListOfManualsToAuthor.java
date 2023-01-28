@@ -1,6 +1,9 @@
-package com.example.backend.auth.controllers;
+package com.example.backend.manual.controllers;
 
+import com.example.backend.auth.model.User;
 import com.example.backend.auth.repository.UserRepository;
+import com.example.backend.auth.service.UserData;
+import com.example.backend.auth.service.UserDetailsImpl;
 import com.example.backend.manual.pojo.ManualJSON;
 import com.example.backend.manual.repository.ManualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +23,12 @@ import java.util.List;
 @RequestMapping("/manuals")
 public class GetListOfManualsToAuthor {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ManualRepository manualRepository;
-
 
     @GetMapping("/addedManuals")
     @Transactional
-    public List<ManualJSON> getListOfManualsToAuthor(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUser = authentication.getName();
-        var userOpt = userRepository.findByUsername(currentUser);
-        var user = userOpt.orElseThrow(()->new UsernameNotFoundException(currentUser));
+    public List<ManualJSON> getListOfManualsToAuthor(Authentication authentication){
+        User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         var manualOpt = manualRepository.findAllByUser(user);
         var manuals = manualOpt.orElseThrow(IllegalArgumentException::new);
         List <ManualJSON> manualList = new ArrayList<>();
