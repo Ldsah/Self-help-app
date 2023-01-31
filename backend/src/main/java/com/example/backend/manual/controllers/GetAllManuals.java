@@ -4,8 +4,6 @@ import com.example.backend.manual.model.Manual;
 import com.example.backend.manual.pojo.ManualJSON;
 import com.example.backend.manual.repository.ManualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +17,13 @@ import java.util.List;
 public class GetAllManuals {
     @Autowired
     ManualRepository manualRepository;
+
     @GetMapping("/all")
     @Transactional
-    public List<ManualJSON> getAllManuals(){
+    public List<ManualJSON> getAllManuals() {
         List<Manual> manualList = manualRepository.findAll();
         List<ManualJSON> allManuals = new ArrayList<>();
-        for (int i = 0; i < manualList.size(); i++) {
-            Manual currentManual = manualList.get(i);
+        for (Manual currentManual : manualList) {
             ManualJSON newManualJson = new ManualJSON(currentManual.getId(), currentManual.getManual(), currentManual.getDescription());
             allManuals.add(newManualJson);
         }
