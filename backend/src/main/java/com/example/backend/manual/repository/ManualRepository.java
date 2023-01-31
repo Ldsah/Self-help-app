@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ManualRepository extends CrudRepository<Manual, Long>{
+public interface ManualRepository extends CrudRepository<Manual, Long> {
     Optional<Manual> findById(Long id);
     Boolean existsByManual(String manual);
     Optional<List<Manual>> findAllByUser(User user);
-
+    List<Manual> findAll();
 }

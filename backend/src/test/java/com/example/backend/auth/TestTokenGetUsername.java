@@ -11,6 +11,6 @@ public class TestTokenGetUsername {
     JwtTokenProvider jwtTokenProvider;
     @Test
     void jwtTokenGetUsername(){
-        System.out.println(jwtTokenProvider.getUsername("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXRyZW5hIiwicm9sZXMiOlsiUk9MRV9TUEVDSUFMSVNUIl0sImlhdCI6MTY3NDgzNDAzMCwiZXhwIjoxNjc0ODM3NjMwfQ.xY_uLJv0m0WgwzntPxbZuhHSzzHKw4reLfAwn7l-iPk"));
+        System.out.println(jwtTokenProvider.getUsername("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXRyZW5hIiwicm9sZXMiOlsiUk9MRV9TUEVDSUFMSVNUIl0sImlhdCI6MTY3NTE2MTYxOCwiZXhwIjoxNjc1MTY1MjE4fQ.Ov3q0G1l1jlvxpk3mmr50KiDr5T1R3atsr2kyIU4FTg"));
     }
 }

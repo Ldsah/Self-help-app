@@ -50,7 +50,7 @@ public class User  {
     @JoinTable(name = "user_manuals",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "manual_id"))
-    private Set<Manual> manuals = new HashSet<>();
+    private Set<Manual> manualsForUse = new HashSet<>();
 
     public User(){
 
@@ -141,11 +141,11 @@ public class User  {
         this.email = email;
     }
 
-    public Set<Manual> getManuals() {
-        return manuals;
+    public Set<Manual> getManualsForUse() {
+        return manualsForUse;
     }
 
-    public void setManuals(Set<Manual> manuals) {
-        this.manuals = manuals;
+    public void setManualsForUse(Set<Manual> manualsForUse) {
+        this.manualsForUse = manualsForUse;
     }
 }
