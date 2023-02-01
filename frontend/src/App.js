@@ -6,6 +6,8 @@ import {Outlet, Route, Routes} from "react-router-dom";
 import IndexPage from "./components/IndexPage/IndexPage";
 import ManualConstructor from "./components/ManualConstructor/ManualConstructor";
 import ManualConstructorV2 from "./components/ManualConstructorV2/ManualConstructorV2";
+import ActionContainer from "./components/ActionContainer/ActionContainer";
+import ActionContainerTree from "./components/ActionContainerTree/ActionContainerTree";
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
             <Route index element={<IndexPage/>}/>
             <Route path={'profile'} element={<Profile/>}/>
             <Route path={'manuals'} element={<Manuals/>}/>
-            <Route path={'manulelem'} element={<ManualConstructorV2/>}/>
+            <Route path={'manulelem'} element={<ActionContainerTree/>}/>
         </Route>
     </Routes>
   );

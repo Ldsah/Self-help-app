@@ -1,5 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
+import globalActionIdReducer from "./reducers/globalActionId";
 
 export default  configureStore( {
-    reducer: {}
+    reducer: {
+        globalActionId: globalActionIdReducer
+    }
 })
