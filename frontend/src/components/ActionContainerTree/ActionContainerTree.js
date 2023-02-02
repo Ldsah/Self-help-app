@@ -1,46 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ActionContainerTree.css';
 import ActionContainer from "../ActionContainer/ActionContainer";
 import { v4 as uuidv4 } from 'uuid';
+import {useSelector} from "react-redux";
 
-export default class ActionContainerTree extends React.Component {
+export default function ActionContainerTree(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            treeElementList: []
-        }
-    }
+    const [treeElementList, setTreeElementList] = useState([]);
+    const [shouldRender, setShouldRender] = useState(false);
+    const currentActionId = useSelector(state => state.currentActionId.value);
 
-    addActionContainer = () => {
+    const addActionContainer = () => {
         let actionContainer = {
             id: uuidv4(),
+            parent:currentActionId,
             executor: "",
             actionList: []
         }
-        let temptreeElementList = this.state.treeElementList.slice();
-        temptreeElementList.push(actionContainer);
-        this.setState({treeElementList: temptreeElementList});
+        let tempTreeElementList = treeElementList.slice();
+        tempTreeElementList.push(actionContainer);
+        setTreeElementList(tempTreeElementList);
+    }
+
+    const getSignalFromAction = () => {
+        setShouldRender(!shouldRender);
     }
 
 
-    render() {
-
-        return (
+    return (
             <div>
                 <div className={'action-constructor-tree'}>
                     {
-                        this.state.treeElementList.map((treeElement) => {
+                        treeElementList.map((treeElement) => {
                             return (
                                 <div className={'action-constructor-tree__item'} key={treeElement.id}>
-                                    <ActionContainer element={treeElement}/>
+                                    <ActionContainer element={treeElement} signal={getSignalFromAction}/>
                                 </div>
                             )
                         })
                     }
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={() => this.addActionContainer()} id={'bottom-add-action-container'}></button>
+                <button type="submit" className="btn btn-primary" onClick={() => addActionContainer()} id={'bottom-add-action-container'}></button>
             </div>
         )
-    }
+
 }

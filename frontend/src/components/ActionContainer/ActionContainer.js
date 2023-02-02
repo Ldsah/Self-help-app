@@ -1,22 +1,24 @@
 import React, {useState} from 'react';
 import Action from "../Action/Action";
 import './ActionContainer.css';
-import globalActionId, {increment} from "../../app/reducers/globalActionId";
+import {increment} from "../../app/reducers/globalActionId";
 import {useDispatch, useSelector} from "react-redux";
 
-export default function ActionContainer()  {
+export default function ActionContainer(props)  {
     const [executor, setExecutor] = useState("");
     const [actionList, setActionList] = useState([]);
+    const [parent, setParent] = useState("");
 
 
     const globalActionId = useSelector(state => state.globalActionId.value);
     const dispatch = useDispatch();
+    const currentActionId = useSelector(state => state.currentActionId.value);
 
     let addAction = () => {
-        let id = globalActionId;
         let action = {
-            id: id,
-            text: ""
+            id: globalActionId,
+            text: "",
+            parent: props.parent
         };
         let tempActionList = actionList.slice();
         tempActionList.push(action);
@@ -25,14 +27,18 @@ export default function ActionContainer()  {
     }
 
 
+
     return (
             <div>
                 <div className={'action-container-list'}>
                     {
-                        actionList.map((action) => {
+                        actionList
+                            .filter((action) => action.parent == currentActionId || action.parent == undefined
+                        )
+                            .map((action) => {
                             return (
                                 <div className={'action-container-list__item'} key={action.id}>
-                                    <Action value={action} />
+                                    <Action value={action} signal={props.signal}/>
                                 </div>
                             )
                         })
