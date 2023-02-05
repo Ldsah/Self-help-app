@@ -4,10 +4,7 @@ import Profile from "./components/Profile/Profile";
 import Manuals from "./components/Manuals/Manuals";
 import {Outlet, Route, Routes} from "react-router-dom";
 import IndexPage from "./components/IndexPage/IndexPage";
-import ManualConstructor from "./components/ManualConstructor/ManualConstructor";
-import ManualConstructorV2 from "./components/ManualConstructorV2/ManualConstructorV2";
-import ActionContainer from "./components/ActionContainer/ActionContainer";
-import ActionContainerTree from "./components/ActionContainerTree/ActionContainerTree";
+import ActionContainerTreeV2 from "./components/ActionContainerTreeV2/ActionContainerTreeV2";
 
 function App() {
   return (
@@ -16,7 +13,7 @@ function App() {
             <Route index element={<IndexPage/>}/>
             <Route path={'profile'} element={<Profile/>}/>
             <Route path={'manuals'} element={<Manuals/>}/>
-            <Route path={'manulelem'} element={<ActionContainerTree/>}/>
+            <Route path={'manulelem'} element={<ActionContainerTreeV2/>}/>
         </Route>
     </Routes>
   );

@@ -9,16 +9,19 @@ export default function ActionContainer(props)  {
     const [actionList, setActionList] = useState([]);
     const [parent, setParent] = useState("");
 
+    const [shouldRender, setShouldRender] = useState(false);
+
 
     const globalActionId = useSelector(state => state.globalActionId.value);
     const dispatch = useDispatch();
     const currentActionId = useSelector(state => state.currentActionId.value);
+    const stageNumber = useSelector(state => state.stageNumber.value);
 
     let addAction = () => {
         let action = {
             id: globalActionId,
             text: "",
-            parent: props.parent
+            parent: currentActionId
         };
         let tempActionList = actionList.slice();
         tempActionList.push(action);

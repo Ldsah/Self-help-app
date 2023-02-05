@@ -1,6 +1,8 @@
 import './Profile.css'
 import axios from "axios";
 import React from "react";
+import LoginForm from "../LoginForm/LoginForm";
+import api from "../../http";
 
 export default class Profile extends React.Component{
     constructor(props) {
@@ -39,12 +41,10 @@ export default class Profile extends React.Component{
     }
 
     getProfileData = () => {
-        const headers = {"Content-Type": "application/json"};
-        axios.get("http://localhost:8080/profile/data", JSON.stringify({
-                username: 'ale3',
-                password: '123'
-            }), {headers: headers,
-            withCredentials: true,})
+        const headers = {"Content-Type": "application/json",
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`, "Access-Control-Allow-Origin": "*"};
+        axios.get("http://localhost:8080/profile/data", {headers: {"Content-Type": "application/json",
+                'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
             .then(response => {window.console.log(response); alert(response)})
             .catch(response => {window.console.log(response); alert(response)});
     }
@@ -97,6 +97,7 @@ export default class Profile extends React.Component{
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={this.register}></button>
                 </form>
+                    <LoginForm/>
                     <button type="submit" className="btn btn-primary" onClick={this.getProfileData}> получить данные</button>
         </div>
     )}

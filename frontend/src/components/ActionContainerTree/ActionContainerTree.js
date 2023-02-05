@@ -7,8 +7,8 @@ import {useSelector} from "react-redux";
 export default function ActionContainerTree(props) {
 
     const [treeElementList, setTreeElementList] = useState([]);
-    const [shouldRender, setShouldRender] = useState(false);
     const currentActionId = useSelector(state => state.currentActionId.value);
+    const [shouldRender, setShouldRender] = useState(false);
 
     const addActionContainer = () => {
         let actionContainer = {
@@ -34,7 +34,7 @@ export default function ActionContainerTree(props) {
                         treeElementList.map((treeElement) => {
                             return (
                                 <div className={'action-constructor-tree__item'} key={treeElement.id}>
-                                    <ActionContainer element={treeElement} signal={getSignalFromAction}/>
+                                    <ActionContainer element={treeElement} signal={getSignalFromAction} />
                                 </div>
                             )
                         })

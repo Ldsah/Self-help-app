@@ -20,8 +20,11 @@ export default function Action(props) {
 
     let setCurrentId = () => {
         dispatch(set(props.value.id));
-        //props.signal.call();
-        console.log(props.value.id)
+        let el = document.getElementById(props.value.id);
+        el.className = '.parent-action';
+        props.signal.call();
+        //console.log(props.value.id);
+
     }
 
 
