@@ -1,9 +1,7 @@
 package com.example.backend.manual.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 @Table(name = "action_relation")
 @Entity
@@ -11,6 +9,10 @@ public class ActionRelation {
     @Id
     @GeneratedValue
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manual_id")
+    @JsonBackReference
+    protected Manual manual;
 
     private Long parentId;
     private Long childId;
@@ -46,5 +48,13 @@ public class ActionRelation {
 
     public void setChildId(Long childId) {
         this.childId = childId;
+    }
+
+    public Manual getManual() {
+        return manual;
+    }
+
+    public void setManual(Manual manual) {
+        this.manual = manual;
     }
 }

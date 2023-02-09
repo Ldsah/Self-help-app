@@ -19,7 +19,7 @@ public class GetUserManualsForUse {
 
     @GetMapping("/getMyManualsForUse")
     @Transactional
-    public List<ManualJSON> getMuManualsForUse(Authentication authentication){
+    public List<ManualJSON> getMyManualsForUse(Authentication authentication){
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         var manualsForUse = user.getManualsForUse();
         List<ManualJSON> manualList = new ArrayList<>();

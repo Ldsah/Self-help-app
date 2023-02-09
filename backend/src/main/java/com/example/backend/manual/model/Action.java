@@ -1,5 +1,6 @@
 package com.example.backend.manual.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class Action {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manual_id")
+    @JsonBackReference
     protected Manual manual;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -63,6 +63,7 @@ public class SaveManualController {
         List<ActionRelationJson> actionRelationJsons = manualSaveForm.getRelation();
         for(ActionRelationJson actionRelationJson: actionRelationJsons){
             ActionRelation actionRelation = new ActionRelation(actionRelationJson.getParentId(), actionRelationJson.getChildId());
+            actionRelation.setManual(manual);
             actionRelationRepository.save(actionRelation);
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
