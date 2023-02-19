@@ -92,9 +92,9 @@ export default class Profile extends React.Component{
                                    value={this.state.role} name={'role'}
                                    onChange={this.handleInputChange}/>
                         </div>
-                        <button type="submit" className="btn btn-primary" onClick={this.register}></button>
+                        <button type="submit" className="btn btn-primary" onClick={this.register}>Сохранить</button>
                 </form>
-                    <button type="submit" className="btn btn-primary" onClick={this.getProfileData}> получить данные</button>
+
         </div>
     )}
 }

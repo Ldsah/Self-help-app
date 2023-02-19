@@ -12,11 +12,12 @@ function App() {
   return (
     <Routes>
         <Route path={'/'} element={<Layout/>}>
-            <Route index element={<IndexPage/>}/>
+            <Route index element={<LoginForm/>}/>
             <Route path={'profile'} element={<Profile/>}/>
             <Route path={'manuals'} element={<Manuals/>}/>
             <Route path={'manulelem'} element={<ActionContainerTreeV2/>}/>
             <Route path={'login'} element={<LoginForm/>}/>
+            <Route path={'login/profile'} element={<Profile/>}/>
             <Route path={'manuals/manualUsing'} element={<ManualUsing/>}/>
         </Route>
     </Routes>
