@@ -2,18 +2,13 @@ package com.example.backend.auth.configs;
 
 import com.example.backend.auth.jwt.JwtConfigurer;
 import com.example.backend.auth.jwt.JwtTokenProvider;
-import com.example.backend.auth.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -25,7 +20,7 @@ public class SecurityConfig {
     private static final String LOGIN_ENDPOINT = "/auth/signin";
 
 
-    @Autowired
+
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -44,13 +39,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().disable()
+        http.cors().and().httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/signup", LOGIN_ENDPOINT).permitAll()
-                .requestMatchers("/createManual/saveManual", "/manuals/addedManuals").hasRole("SPECIALIST")
+                .requestMatchers("/createManual/saveManual", "/manuals/addedManuals", "/manuals/getManual").hasRole("SPECIALIST")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));

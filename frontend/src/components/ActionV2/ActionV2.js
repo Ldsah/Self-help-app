@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import './ActionV2.css';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {set} from "../../app/reducers/currentActionId";
 
 export default function ActionV2(props) {
     const [text, setText] = useState(props.value.text);
     const dispatch = useDispatch();
+    const currentActionId = useSelector(state => state.currentActionId.value);
 
     const handleInputChange = (event) => {
         const target = event.target;
@@ -15,7 +16,10 @@ export default function ActionV2(props) {
     }
 
     const chooseParent = () => {
-        dispatch(set(props.value.id));
+        //props.adParent(currentActionId?.payload);
+        let curAId = {id: props.value.id, stage: props.value.stage}
+        props.setParent(curAId);
+        dispatch(set(curAId));
         props.signalRender();
     }
 

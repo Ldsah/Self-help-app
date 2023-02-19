@@ -10,6 +10,7 @@ function Header() {
                 <Link to={'profile'} className={'header_link'}>Профиль</Link>
                 <Link to={'manuals'} className={'header_link'}>Методички</Link>
                 <Link to={'manulelem'} className={'header_link'}>Конструктор</Link>
+                <Link to={'login'} className={'header_link'}>Логин</Link>
             </div>
         </header>
     )

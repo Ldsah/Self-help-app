@@ -3,11 +3,11 @@ import {createSlice} from "@reduxjs/toolkit";
 export const currentActionIdSlice = createSlice({
     name: 'currentActionId',
     initialState: {
-        value: undefined
+        value: {id: undefined, stage: undefined}
     },
     reducers: {
-        set: (state, id) => {
-            state.value = id;
+        set: (state, obj) => {
+            state.value = obj;
         }
     }
 });

@@ -1,6 +1,7 @@
 package com.example.backend.manual.model;
 
 import com.example.backend.auth.model.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,17 @@ public class Manual {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonManagedReference
     protected List<Action> actionsForManual = new ArrayList<>();
+      @OneToMany(
+            mappedBy = "manual",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+      @JsonManagedReference
+      protected List<ActionRelation> actionRelations = new ArrayList<>();
+
+
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -66,6 +77,21 @@ public class Manual {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Action> getActionsForManual() {
+        return actionsForManual;
+    }
+
+    public void setActionsForManual(List<Action> actionsForManual) {
+        this.actionsForManual = actionsForManual;
+    }
+    public List<ActionRelation> getActionRelations() {
+        return actionRelations;
+    }
+
+    public void setActionRelations(List<ActionRelation> actionRelations) {
+        this.actionRelations = actionRelations;
     }
 }
 

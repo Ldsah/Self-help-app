@@ -19,10 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,6 +44,7 @@ public class SaveManualController {
         this.service = service;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/saveManual")
     @Transactional
     public ResponseEntity<?> save(@RequestBody ManualSaveForm manualSaveForm) {
@@ -63,6 +61,7 @@ public class SaveManualController {
         List<ActionRelationJson> actionRelationJsons = manualSaveForm.getRelation();
         for(ActionRelationJson actionRelationJson: actionRelationJsons){
             ActionRelation actionRelation = new ActionRelation(actionRelationJson.getParentId(), actionRelationJson.getChildId());
+            actionRelation.setManual(manual);
             actionRelationRepository.save(actionRelation);
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

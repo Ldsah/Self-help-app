@@ -9,13 +9,14 @@ export default function ActionContainerV2(props)  {
     const [actionList, setActionList] = useState(props.element.actionList);
     const currentActionId = useSelector(state => state.currentActionId.value);
     const globalActionId = useSelector(state => state.globalActionId.value);
+    const [parent, setParent] = useState();
     const dispatch = useDispatch();
 
 
     let addAction = (callback) => {
         let action = {
             id: globalActionId,
-            parentAction: currentActionId,
+            parentAction: currentActionId?.payload,
             text: "",
             stage: props.element.stage
         };
@@ -26,19 +27,26 @@ export default function ActionContainerV2(props)  {
         callback(action);
     }
 
+    let addParent = (parent) => {
+        setParent(parent);
+    }
+
     let al =actionList
-        .filter((action) => action.parentAction?.payload == currentActionId?.payload || action.parentAction == undefined /*|| props.element.stage > action.stage*/);
+        .filter((action) => action.parentAction?.payload == currentActionId?.payload || action.stage <= currentActionId?.payload.stage || currentActionId?.payload.stage == undefined );
 
     return (
         <div>
             <div className={'action-container-list'}>
                 {
                     actionList
-                        .filter((action) => action.parentAction?.payload == currentActionId?.payload || action.parentAction == undefined /*|| props.element.stage > action.stage*/)
+                        .filter(
+                            function (action) {
+                                return action.parentAction?.id == currentActionId?.payload?.id || action.stage <= currentActionId?.payload.stage && action?.parentAction?.id == props?.element?.parent?.id || currentActionId?.payload.stage == undefined;
+                            })
                         .map((action) => {
                             return (
                                 <div className={'action-container-list__item'} key={action.id}>
-                                    <ActionV2 value={action} signalWrite={props.signalWrite} signalRender={props.signalRender}/>
+                                    <ActionV2 value={action} signalWrite={props.signalWrite} signalRender={props.signalRender} adParent={addParent} setParent={props.setParent}/>
                                 </div>
                             )
                         })

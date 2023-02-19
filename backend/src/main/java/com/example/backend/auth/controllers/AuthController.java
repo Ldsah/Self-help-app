@@ -4,6 +4,7 @@ package com.example.backend.auth.controllers;
 import com.example.backend.auth.jwt.JwtTokenProvider;
 import com.example.backend.auth.model.Role;
 import com.example.backend.auth.model.User;
+import com.example.backend.auth.pojo.LiginResponse;
 import com.example.backend.auth.pojo.LoginForm;
 import com.example.backend.auth.pojo.RegistrationForm;
 import com.example.backend.auth.pojo.MessageResponse;
@@ -40,7 +41,7 @@ public class AuthController {
 
     Set<Role> roles = new HashSet<>();
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
     @Transactional
     public ResponseEntity<?> signUpUser(@RequestBody RegistrationForm registrationForm) {
@@ -71,6 +72,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User created"));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signin")
     @Transactional
     public ResponseEntity login(@RequestBody LoginForm loginForm) {
@@ -82,11 +84,13 @@ public class AuthController {
             var user = userOpt.orElseThrow(() -> new UsernameNotFoundException(username));
 
             String token = jwtTokenProvider.createToken(username, user.getRoles());
-            HashMap<String, String> response = new HashMap<>();
-            response.put("username", username);
-            response.put("token", token);
+            var roles = user.getRoles().stream().map((role)->role.getName()).toArray(String[]::new);
+            var resp = new LiginResponse();
+            resp.username = username;
+            resp.token = token;
+            resp.roles = roles;
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(resp);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }

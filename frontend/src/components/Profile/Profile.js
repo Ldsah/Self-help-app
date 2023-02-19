@@ -1,9 +1,6 @@
 import './Profile.css'
 import axios from "axios";
 import React from "react";
-import LoginForm from "../LoginForm/LoginForm";
-import api from "../../http";
-
 export default class Profile extends React.Component{
     constructor(props) {
         super(props);
@@ -35,16 +32,16 @@ export default class Profile extends React.Component{
         const headers = {"Content-Type": "application/json"};
         const data = {username: this.state.username, password: this.state.password, name: this.state.name,
             email: this.state.email, phone: this.state.phone, gender: this.state.gender, age: this.state.age, role: this.state.role};
-        axios.post("http://localhost:8080/auth/signup", data, {headers: headers})
+        axios.post("http://localhost:8080/auth/signup", data)
             .then(response => window.console.log(response))
             .catch(response => window.console.log(response));
     }
 
     getProfileData = () => {
-        const headers = {"Content-Type": "application/json",
-            'Authorization' : `Bearer ${localStorage.getItem('token')}`, "Access-Control-Allow-Origin": "*"};
-        axios.get("http://localhost:8080/profile/data", {headers: {"Content-Type": "application/json",
-                'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
+        let auth = "Bearer " + localStorage.getItem("token");
+        const headers = {"Content-Type": "application/json","Accept" : 'application/json',
+            'Authorization' : auth/*, "Access-Control-Allow-Origin": "*"*/};
+        axios.get("http://localhost:8080/profile/data", headers)
             .then(response => {window.console.log(response); alert(response)})
             .catch(response => {window.console.log(response); alert(response)});
     }
@@ -97,7 +94,6 @@ export default class Profile extends React.Component{
                         </div>
                         <button type="submit" className="btn btn-primary" onClick={this.register}></button>
                 </form>
-                    <LoginForm/>
                     <button type="submit" className="btn btn-primary" onClick={this.getProfileData}> получить данные</button>
         </div>
     )}

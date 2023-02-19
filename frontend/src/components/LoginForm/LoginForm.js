@@ -1,35 +1,23 @@
 import React, {useState} from 'react';
 import './LoginForm.css';
-import {useDispatch, useSelector} from "react-redux";
-import AuthService from "../../services/AuthService";
-import isEmail from "validator/es/lib/isEmail";
-import {setIsAuth} from "../../app/reducers/isAuth";
-import {setUser} from "../../app/reducers/user";
+import {useDispatch} from "react-redux";
 import axios from "axios";
-
-export default function LoginForm(props) {
+export default function LoginForm() {
     const [userName, setUserName] = useState();
     const [password, setPassword] = useState();
 
-    const user = useSelector(state => state.user.value);
-    const isAuth = useSelector(state => state.isAuth.value);
     const dispatch = useDispatch();
 
     const login = async (userName, password) => {
-        const headers = {"Content-Type": "application/json"};
+        const headers = {"Content-Type": "application/json","Accept" : 'application/json'};
         const data = {username: userName, password: password}
         try {
-            /*
-            const response = await AuthService.login(userName, password);
-            localStorage.setItem('token', response.data.token);
-            dispatch(setIsAuth(true));
-            dispatch(setUser(response.username));*/
+
             axios.post("http://localhost:8080/auth/signin", data, {headers: headers})
                 .then(response => {
-                    window.console.log(response);
+                    //window.console.log(response);
                     localStorage.setItem('token', response.data.token);
-                    dispatch(setIsAuth(true));
-                    dispatch(setUser(response.data.username));
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + response.data.token;
                 })
                 .catch(response => window.console.log(response));
         } catch (e){

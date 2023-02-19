@@ -5,6 +5,8 @@ import Manuals from "./components/Manuals/Manuals";
 import {Outlet, Route, Routes} from "react-router-dom";
 import IndexPage from "./components/IndexPage/IndexPage";
 import ActionContainerTreeV2 from "./components/ActionContainerTreeV2/ActionContainerTreeV2";
+import LoginForm from "./components/LoginForm/LoginForm";
+import ManualUsing from "./components/ManualUsing/ManualUsing";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
             <Route path={'profile'} element={<Profile/>}/>
             <Route path={'manuals'} element={<Manuals/>}/>
             <Route path={'manulelem'} element={<ActionContainerTreeV2/>}/>
+            <Route path={'login'} element={<LoginForm/>}/>
+            <Route path={'manuals/manualUsing'} element={<ManualUsing/>}/>
         </Route>
     </Routes>
   );
