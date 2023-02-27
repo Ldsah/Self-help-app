@@ -21,7 +21,6 @@ export default function Manuals() {
             .catch(
                 response => {
                     window.console.log(response);
-                    alert(response)
                 });
     }
 

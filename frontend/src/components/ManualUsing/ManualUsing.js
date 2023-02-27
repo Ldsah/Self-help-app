@@ -1,8 +1,8 @@
 import './ManualUsing.css'
-import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import ManualUsingElement from "../ManualUsingElement/ManualUsingElement";
 
 function ManualUsing(props) {
     const manualNumber = useSelector(state => state.manualNumber.value);
@@ -23,14 +23,14 @@ function ManualUsing(props) {
             .catch(response => window.console.log(response));
     }
 
-    let findChild = (parentIdVal=null) => {
-        let relation = data.data.relation;
+    let findChildren = (parentIdVal=null) => {
+        let relation = data.payload.data.relation.slice();
         let result = relation.filter(item => item.parentId == parentIdVal).map(item => item.childId);
         return result;
     }
 
     let findElement = (elementId) => {
-        let actions = data.data.actions;
+        let actions = data.payload.data.actions.slice();
         let result = actions.filter(item => item.stepId = elementId);
         return result[0];
     }
@@ -39,12 +39,12 @@ function ManualUsing(props) {
 
     }
 
-
-
+    let setElement = (value) => {
+        setCurrentBlock(value);
+    }
 
     return (
-        <div >
-5
+        <div><ManualUsingElement func={setElement} />
         </div>
     )
 }

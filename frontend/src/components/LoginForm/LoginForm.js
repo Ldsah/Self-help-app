@@ -9,7 +9,8 @@ export default function LoginForm() {
 
     const dispatch = useDispatch();
 
-    const login = async (userName, password) => {
+    const login = (scope, userName, password) => {
+        scope.preventDefault();
         const data = {username: userName, password: password}
         try {
             axios.post("http://localhost:8080/auth/signin", data)
@@ -59,7 +60,7 @@ export default function LoginForm() {
                                        onChange={e => setPassword(e.target.value)} />
                             </div>
                             <div className="text-center">
-                                <button className="btn btn-color px-5 mb-5 w-100" onClick={() => login(userName, password)}>Войти</button>
+                                <button className="btn btn-color px-5 mb-5 w-100" onClick={(scope) => login(scope, userName, password)}>Войти</button>
                             </div>
                             <div id="emailHelp" className="form-text text-center mb-5 text-dark">
                                 <Link to={'profile'} className={'header_link'}>Зарегистрироваться</Link>
